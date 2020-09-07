@@ -12,7 +12,7 @@ namespace Keryhe.Toggle.Api.Persistence
         IEnumerable<Feature> GetFeatures();
         IEnumerable<App> GetApps(int featureId);
         IEnumerable<Feature> GetFeatures(int appId);
-        App GetApp(int id);
-        Feature GetFeature(int id);
+        App GetApp(string name);
+        Feature GetFeature(string name);
     }
 }

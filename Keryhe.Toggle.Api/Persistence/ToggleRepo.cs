@@ -17,12 +17,18 @@ namespace Keryhe.Toggle.Api.Persistence
             _factory = factory;
         }
 
-        public App GetApp(int id)
+        public App GetApp(string name)
         {
             using(IDbConnection conn = _factory.CreateConnection())
             {
                 App result = null;
-                var apps = conn.ExecuteQuery("SELECT * FROM App where Id = " + id.ToString());
+
+                Dictionary<string, object> parameters = new Dictionary<string, object>
+                {
+                    { "@name", name }
+                };
+
+                var apps = conn.ExecuteQuery("SELECT * FROM App where Id = @name", CommandType.Text, parameters);
 
                 if(apps.Count == 1)
                 {
@@ -56,7 +62,12 @@ namespace Keryhe.Toggle.Api.Persistence
             {
                 List<App> results = new List<App>();
 
-                var apps = conn.ExecuteQuery("SELECT * FROM App a INNER JOIN AppFeatureLink af ON a.Id = af.AppId WHERE af.FeatureId = " + featureId.ToString());
+                Dictionary<string, object> parameters = new Dictionary<string, object>
+                {
+                    { "@featureId", featureId }
+                };
+
+                var apps = conn.ExecuteQuery("SELECT * FROM App a INNER JOIN AppFeatureLink af ON a.Id = af.AppId WHERE af.FeatureId = @featureId", CommandType.Text, parameters);
 
                 foreach (Dictionary<string, object> app in apps)
                 {
@@ -67,12 +78,18 @@ namespace Keryhe.Toggle.Api.Persistence
             }
         }
 
-        public Feature GetFeature(int id)
+        public Feature GetFeature(string name)
         {
             using (IDbConnection conn = _factory.CreateConnection())
             {
                 Feature result = null;
-                var features = conn.ExecuteQuery("SELECT * FROM Feature where Id = " + id.ToString());
+
+                Dictionary<string, object> parameters = new Dictionary<string, object>
+                {
+                    { "@name", name }
+                };
+
+                var features = conn.ExecuteQuery("SELECT * FROM Feature where Name = @name", CommandType.Text, parameters);
 
                 if (features.Count == 1)
                 {
@@ -106,7 +123,12 @@ namespace Keryhe.Toggle.Api.Persistence
             {
                 List<Feature> results = new List<Feature>();
 
-                var features = conn.ExecuteQuery("SELECT * FROM Feature f INNER JOIN AppFeatureLink af ON f.Id = af.AppId WHERE af.AppId = " + appId.ToString());
+                Dictionary<string, object> parameters = new Dictionary<string, object>
+                {
+                    { "@appId", appId }
+                };
+
+                var features = conn.ExecuteQuery("SELECT * FROM Feature f INNER JOIN AppFeatureLink af ON f.Id = af.AppId WHERE af.AppId = @appId", CommandType.Text, parameters);
 
                 foreach (Dictionary<string, object> feature in features)
                 {

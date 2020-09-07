@@ -32,31 +32,31 @@ namespace Keryhe.Toggle.Api.Controllers
             return features;
         }
 
-        // GET api/features/5
-        [HttpGet("{id}")]
-        public Feature Get(int id)
+        // GET api/features/name
+        [HttpGet("{name}")]
+        public Feature Get(string name)
         {
-            Feature feature = _repo.GetFeature(id);
+            Feature feature = _repo.GetFeature(name);
             return feature;
         }
 
         // GET api/features/5/apps
-        [HttpGet("{id}/apps")]
-        public IEnumerable<App> GetApps(int id)
+        [HttpGet("{featureId}/apps")]
+        public IEnumerable<App> GetApps(int featureId)
         {
-            IEnumerable<App> apps = _repo.GetApps(id);
+            IEnumerable<App> apps = _repo.GetApps(featureId);
             return apps;
         }
 
         // POST api/features
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void Post([FromBody] Feature value)
         {
         }
 
         // PUT api/features/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public void Put(int id, [FromBody] Feature value)
         {
         }
 
