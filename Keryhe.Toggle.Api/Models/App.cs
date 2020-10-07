@@ -25,7 +25,10 @@ namespace Keryhe.Toggle.Api.Models
                         Name = properties[key].ToString();
                         break;
                     case "Description":
-                        Description = properties[key].ToString();
+                        if (properties[key] != null)
+                        {
+                            Description = properties[key].ToString();
+                        }
                         break;
                 }
             }

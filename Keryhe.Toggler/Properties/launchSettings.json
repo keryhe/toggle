@@ -1,0 +1,10 @@
+﻿{
+  "profiles": {
+    "Keryhe.Toggler": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}

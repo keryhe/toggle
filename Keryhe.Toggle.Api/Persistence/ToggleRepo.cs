@@ -21,6 +21,7 @@ namespace Keryhe.Toggle.Api.Persistence
         {
             using(IDbConnection conn = _factory.CreateConnection())
             {
+                conn.Open();
                 App result = null;
 
                 Dictionary<string, object> parameters = new Dictionary<string, object>
@@ -43,6 +44,7 @@ namespace Keryhe.Toggle.Api.Persistence
         {
             using (IDbConnection conn = _factory.CreateConnection())
             {
+                conn.Open();
                 List<App> results = new List<App>();
 
                 var apps = conn.ExecuteQuery("SELECT * FROM App");
@@ -60,6 +62,7 @@ namespace Keryhe.Toggle.Api.Persistence
         {
             using (IDbConnection conn = _factory.CreateConnection())
             {
+                conn.Open();
                 List<App> results = new List<App>();
 
                 Dictionary<string, object> parameters = new Dictionary<string, object>
@@ -82,6 +85,7 @@ namespace Keryhe.Toggle.Api.Persistence
         {
             using (IDbConnection conn = _factory.CreateConnection())
             {
+                conn.Open();
                 Feature result = null;
 
                 Dictionary<string, object> parameters = new Dictionary<string, object>
@@ -104,6 +108,7 @@ namespace Keryhe.Toggle.Api.Persistence
         {
             using (IDbConnection conn = _factory.CreateConnection())
             {
+                conn.Open();
                 List<Feature> results = new List<Feature>();
 
                 var features = conn.ExecuteQuery("SELECT * FROM Features");
@@ -121,6 +126,7 @@ namespace Keryhe.Toggle.Api.Persistence
         {
             using (IDbConnection conn = _factory.CreateConnection())
             {
+                conn.Open();
                 List<Feature> results = new List<Feature>();
 
                 Dictionary<string, object> parameters = new Dictionary<string, object>
