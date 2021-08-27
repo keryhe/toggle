@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Keryhe.Toggle.Api.Models
+namespace Keryhe.Toggle.Models
 {
-    public class App
+    public class FeatureModel
     {
-        public App()
+        public FeatureModel()
         {
 
         }
 
-        public App(Dictionary<string, object> properties)
+        public FeatureModel(Dictionary<string, object> properties)
         {
             foreach (string key in properties.Keys)
             {
@@ -30,6 +30,9 @@ namespace Keryhe.Toggle.Api.Models
                             Description = properties[key].ToString();
                         }
                         break;
+                    case "Toggle":
+                        Toggle = (bool)properties[key];
+                        break;
                 }
             }
         }
@@ -39,5 +42,7 @@ namespace Keryhe.Toggle.Api.Models
         public string Name { get; set; }
 
         public string Description { get; set; }
+
+        public bool Toggle { get; set; }
     }
 }

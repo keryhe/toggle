@@ -1,4 +1,5 @@
 ﻿using Keryhe.Toggle.Models;
+using Keryhe.Toggle.Persistence;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 using System;
@@ -13,26 +14,26 @@ namespace Keryhe.Toggle
 {
     public class Feature: IFeature
     {
-        private readonly HttpClient _httpClient;
+        private readonly IToggleRepo _repo;
         private readonly IDistributedCache _cache;
         private readonly ILogger<Feature> _logger;
 
-        public Feature(HttpClient httpClient, IDistributedCache cache, ILogger<Feature> logger)
+        public Feature(IToggleRepo repo, IDistributedCache cache, ILogger<Feature> logger)
         {
-            _httpClient = httpClient;
+            _repo = repo;
             _cache = cache;
             _logger = logger;
         }
 
         public bool IsOn(string name)
         {
-            var feature = GetFeatureAsync(name).GetAwaiter().GetResult();
+            var feature = GetFeature(name);
             return feature.Toggle;
         }
 
         public bool IsOff(string name)
         {
-            var feature = GetFeatureAsync(name).GetAwaiter().GetResult();
+            var feature = GetFeature(name);
             return !feature.Toggle;
         }
 
@@ -48,59 +49,68 @@ namespace Keryhe.Toggle
             return !feature.Toggle;
         }
 
-        private async Task<FeatureModel> GetFeatureAsync(string name)
+        #region Sync
+        private FeatureModel GetFeature(string name)
         {
-            FeatureModel feature = await RetrieveFromCache(name);
+            FeatureModel feature = RetrieveFromCache(name);
 
             if (feature == null)
             {
-                _logger.LogDebug("Retrieve feature {0} from API", name);
-                HttpResponseMessage response = await _httpClient.GetAsync("api/features/" + name);
-
-                if (response.StatusCode == HttpStatusCode.OK)
-                {
-                    string responseBody = await TryReadResponseBody(response);
-                    feature = JsonSerializer.Deserialize<FeatureModel>(responseBody);
-                    
-                    await AddToCache(feature);
-
-                    return feature;
-                }
-                else
-                {
-                    _logger.LogError("Failed to retrieve feature {0} from API, status code {1}", name, response.StatusCode);
-                    return new FeatureModel()
-                    {
-                        Id = 0,
-                        Name = name,
-                        Toggle = false
-                    };
-                }
+                _logger.LogDebug("Retrieve feature {0} from DB", name);
+                feature = _repo.GetFeature(name);
+                AddToCache(feature);
             }
 
             return feature;
         }
 
-        private async Task<string> TryReadResponseBody(HttpResponseMessage response)
+        private void AddToCache(FeatureModel feature)
         {
-            try
-            {
-                return await response.Content.ReadAsStringAsync();
-            }
-            catch
-            {
-                return "";
-            }
+            var featureJson = JsonSerializer.Serialize<FeatureModel>(feature);
+            var encodedFeature = Encoding.UTF8.GetBytes(featureJson);
+            _cache.Set(feature.Name, encodedFeature);
         }
 
-        private async Task AddToCache(FeatureModel feature)
+        private FeatureModel RetrieveFromCache(string name)
+        {
+            FeatureModel feature = null;
+
+            var encodedFeature = _cache.Get(name);
+            if (encodedFeature != null)
+            {
+                var featureJson = Encoding.UTF8.GetString(encodedFeature);
+                feature = JsonSerializer.Deserialize<FeatureModel>(featureJson);
+            }
+
+            return feature;
+        }
+        #endregion
+
+        #region Async
+        private async Task<FeatureModel> GetFeatureAsync(string name)
+        {
+            FeatureModel feature = await RetrieveFromCacheAsync(name);
+
+            if (feature == null)
+            {
+                _logger.LogDebug("Retrieve feature {0} from DB", name);
+                feature = _repo.GetFeature(name);
+                await AddToCacheAsync(feature);
+            }
+
+            return feature;
+        }
+
+        
+
+        private async Task AddToCacheAsync(FeatureModel feature)
         {
             var featureJson = JsonSerializer.Serialize<FeatureModel>(feature);
             var encodedFeature = Encoding.UTF8.GetBytes(featureJson);
             await _cache.SetAsync(feature.Name, encodedFeature);
         }
 
-        private async Task<FeatureModel> RetrieveFromCache(string name)
+        private async Task<FeatureModel> RetrieveFromCacheAsync(string name)
         {
             FeatureModel feature = null;
 
@@ -113,5 +123,6 @@ namespace Keryhe.Toggle
 
             return feature;
         }
+        #endregion
     }
 }

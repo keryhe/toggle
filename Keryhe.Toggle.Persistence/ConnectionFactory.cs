@@ -6,7 +6,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Keryhe.Toggle.Api.Persistence
+namespace Keryhe.Toggle.Persistence
 {
     public class ConnectionFactory : IConnectionFactory
     {

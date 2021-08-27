@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Keryhe.Toggle;
+using Keryhe.Toggle.Persistence;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -22,10 +23,9 @@ namespace Keryhe.Toggler
             {
                 services.AddDistributedMemoryCache();
 
-                services.AddHttpClient<IFeature, Feature>(f =>
-                {
-                    f.BaseAddress = new Uri("http://localhost:6000");
-                });
+                services.AddSingleton<IConnectionFactory, ConnectionFactory>();
+                services.AddTransient<IToggleRepo, ToggleRepo>();
+                services.AddTransient<IFeature, Feature>();
 
                 services.AddHostedService<Worker>();
             });

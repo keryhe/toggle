@@ -5,11 +5,11 @@ VisualStudioVersion = 16.0.30204.135
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Keryhe.Toggle", "Keryhe.Toggle\Keryhe.Toggle.csproj", "{E08D5273-B45F-4050-8FAA-80E2AE0A8B75}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Keryhe.Toggle.Api", "Keryhe.Toggle.Api\Keryhe.Toggle.Api.csproj", "{B2FA7DFB-3E68-418C-8361-4DF5848BA328}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Keryhe.Toggle.App", "Keryhe.Toggle.App\Keryhe.Toggle.App.csproj", "{92B8B0E1-4C5D-4A04-96BE-56FA27D7350C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Keryhe.Toggle.App", "Keryhe.Toggle.App\Keryhe.Toggle.App.csproj", "{92B8B0E1-4C5D-4A04-96BE-56FA27D7350C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Keryhe.Toggler", "Keryhe.Toggler\Keryhe.Toggler.csproj", "{57FE03CB-9B1C-4C0C-A00B-7264DE456D4F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Keryhe.Toggler", "Keryhe.Toggler\Keryhe.Toggler.csproj", "{57FE03CB-9B1C-4C0C-A00B-7264DE456D4F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Keryhe.Toggle.Persistence", "Keryhe.Toggle.Persistence\Keryhe.Toggle.Persistence.csproj", "{11AB2762-34E1-4CDF-BB46-3B1C0714DB10}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,10 +21,6 @@ Global
 		{E08D5273-B45F-4050-8FAA-80E2AE0A8B75}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E08D5273-B45F-4050-8FAA-80E2AE0A8B75}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E08D5273-B45F-4050-8FAA-80E2AE0A8B75}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B2FA7DFB-3E68-418C-8361-4DF5848BA328}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B2FA7DFB-3E68-418C-8361-4DF5848BA328}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B2FA7DFB-3E68-418C-8361-4DF5848BA328}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B2FA7DFB-3E68-418C-8361-4DF5848BA328}.Release|Any CPU.Build.0 = Release|Any CPU
 		{92B8B0E1-4C5D-4A04-96BE-56FA27D7350C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{92B8B0E1-4C5D-4A04-96BE-56FA27D7350C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{92B8B0E1-4C5D-4A04-96BE-56FA27D7350C}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -33,6 +29,10 @@ Global
 		{57FE03CB-9B1C-4C0C-A00B-7264DE456D4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{57FE03CB-9B1C-4C0C-A00B-7264DE456D4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{57FE03CB-9B1C-4C0C-A00B-7264DE456D4F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11AB2762-34E1-4CDF-BB46-3B1C0714DB10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11AB2762-34E1-4CDF-BB46-3B1C0714DB10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11AB2762-34E1-4CDF-BB46-3B1C0714DB10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11AB2762-34E1-4CDF-BB46-3B1C0714DB10}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
